@@ -5,6 +5,11 @@ require 'capybara/rails'
 
 class ActiveSupport::TestCase
   def make_invite_set
+    User.create(name: "Steve Kinney")
+    User.create(name: "Jeff Casimir")
+    User.create(name: "Steve Kinney")
+    User.create(name: "Jorge Tellez")
+
     InviteSet.create!(
       'title' => "Sample Project A",
       'groups' => "* Jeff Casimir & Rachel Warbelow\n* Steve Kinney & Jorge Tellez"

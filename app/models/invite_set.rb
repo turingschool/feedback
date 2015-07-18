@@ -27,7 +27,12 @@ class InviteSet < ActiveRecord::Base
   end
 
   def cross_invite(group)
-
+    group.each do |target|
+      others = group - [target]
+      others.each do |other|
+        invites.create!(:feedback_from => target, :feedback_for => other)
+      end
+    end
   end
 
   def strip_list_marker(group)

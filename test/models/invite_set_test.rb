@@ -13,7 +13,10 @@ class InviteSetTest < ActiveSupport::TestCase
     set = make_invite_set
     assert_equal 2, set.group_count
     set.deliver!
-    assert_equal 4, set.invites
+    assert_equal 4, set.invites.count
+    set.invites.each do |invite|
+      refute invite.completed?
+    end
   end
 
   def test_it_finds_members_in_a_group
