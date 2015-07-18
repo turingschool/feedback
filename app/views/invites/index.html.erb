@@ -1,0 +1,7 @@
+<h1>Invites for <%= @user.name %></h1>
+
+<ul id='pending-invites'>
+  <% @invites.each do |invite| %>
+    <li><%= invite.feedback_for.name %></li>
+  <% end %>
+</ul>
