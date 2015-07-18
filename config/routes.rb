@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :submissions
   resources :users
   resources :invites
   resources :invite_sets do

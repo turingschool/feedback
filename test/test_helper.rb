@@ -33,4 +33,8 @@ class ActionDispatch::IntegrationTest
   def assert_content(expected)
     assert_match /.*#{expected}.*/, page.body
   end
+
+  def refute_content(expected)
+    refute_match /.*#{expected}.*/, page.body
+  end
 end

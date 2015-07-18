@@ -1,7 +1,18 @@
 <h1>Invites for <%= @user.name %></h1>
 
-<ul id='pending-invites'>
-  <% @invites.each do |invite| %>
-    <li><%= invite.feedback_for.name %></li>
+<ul id='pending'>
+  <% @pending_invites.each do |invite| %>
+    <li id="feedback-for-<%= invite.feedback_for_id %>">
+      <%= invite.feedback_for.name %>
+      <%= link_to "Give Feedback", new_submission_path(:invite_id => invite), :id => 'give_feedback' %>
+    </li>
+  <% end %>
+</ul>
+
+<ul id='completed'>
+  <% @completed_invites.each do |invite| %>
+    <li id="feedback-for-<%= invite.feedback_for_id %>">
+      <%= invite.feedback_for.name %>
+    </li>
   <% end %>
 </ul>
