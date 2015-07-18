@@ -1,0 +1,15 @@
+<h1>Create a New Project</h1>
+
+<%= form_for @invite_set do |f| %>
+  <p>
+    <%= f.label 'title', 'Project Name' %>
+    <%= f.text_field 'title', :id => 'title' %>
+  </p>
+  <p>
+    <%= f.label 'groups', 'Project Groups' %>
+    <%= f.text_area 'groups', :id => 'groups' %>
+  </p>
+  <p>
+    <%= f.submit 'Submit', :id => 'submit' %>
+  </p>
+<% end %>

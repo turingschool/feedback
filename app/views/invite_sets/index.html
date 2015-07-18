@@ -1,0 +1,7 @@
+<h1>Invite Sets</h1>
+
+<ul>
+  <% @invite_sets.each do |invite_set| %>
+    <li><%= link_to invite_set, invite_set.title %></li>
+  <% end %>
+</ul>
