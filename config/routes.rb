@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :users
+  resources :invites
   resources :invite_sets do
     member do
       post :deliver

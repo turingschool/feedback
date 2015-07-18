@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  invite_set_id: 1
+  feedback_from_id: 1
+  feedback_for_id: 1
+  completed: false
+
+two:
+  invite_set_id: 1
+  feedback_from_id: 1
+  feedback_for_id: 1
+  completed: false

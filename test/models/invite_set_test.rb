@@ -8,4 +8,21 @@ class InviteSetTest < ActiveSupport::TestCase
     set.deliver!
     assert set.delivered?
   end
+
+  def test_it_delivers_individual_invites
+    set = make_invite_set
+    assert_equal 2, set.group_count
+    set.deliver!
+    assert_equal 4, set.invites
+  end
+
+  def test_it_finds_members_in_a_group
+    user1 = User.create(name: "Steve Kinney")
+    user2 = User.create(name: "Jeff Casimir")
+    set = InviteSet.new
+    members = set.members_from("* Steve Kinney & Jeff Casimir")
+    assert_equal 2, members.count
+    assert_includes members, user1
+    assert_includes members, user2
+  end
 end
