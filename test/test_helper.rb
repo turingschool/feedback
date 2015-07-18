@@ -4,10 +4,12 @@ require 'rails/test_help'
 require 'capybara/rails'
 
 class ActiveSupport::TestCase
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-  # fixtures :all
-
-  # Add more helper methods to be used by all tests here...
+  def make_invite_set
+    InviteSet.create!(
+      'title' => "Sample Project A",
+      'groups' => "* Jeff Casimir & Rachel Warbelow\n* Steve Kinney & Jorge Tellez"
+    )
+  end
 end
 
 class ActionDispatch::IntegrationTest
@@ -17,5 +19,13 @@ class ActionDispatch::IntegrationTest
 
   def assert_ok(page)
     assert_equal 200, page.status_code
+  end
+
+  def assert_path(path)
+    assert_equal path, current_path
+  end
+
+  def assert_content(expected)
+    assert_match /.*#{expected}.*/, page.body
   end
 end

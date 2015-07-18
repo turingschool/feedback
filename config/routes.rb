@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :invite_sets
+  resources :invite_sets do
+    member do
+      post :deliver
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

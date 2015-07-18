@@ -17,4 +17,10 @@ class InviteSetsController < ApplicationController
     @invite_sets = InviteSet.all
   end
 
+  def deliver
+    @invite_set = InviteSet.find(params[:id])
+    @invite_set.deliver!
+    redirect_to invite_sets_path
+  end
+
 end

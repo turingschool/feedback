@@ -2,6 +2,13 @@
 
 <ul>
   <% @invite_sets.each do |invite_set| %>
-    <li><%= link_to invite_set, invite_set.title %></li>
+    <li id="invite-set-<%= invite_set.id %>">
+      <%= link_to invite_set.title, invite_set %>
+      <% if invite_set.delivered? %>
+        delivered
+      <% else %>
+        <%= link_to 'deliver', deliver_invite_set_path(invite_set), :method => :post %>
+      <% end %>
+    </li>
   <% end %>
 </ul>
