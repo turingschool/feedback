@@ -31,6 +31,7 @@ class InviteSet < ActiveRecord::Base
       others = group - [target]
       others.each do |other|
         invites.create!(:feedback_from => target, :feedback_for => other)
+        InviteMailer.create_invite(User.find(target.id), User.find(other.id), Invite.last.token).deliver_now
       end
     end
   end

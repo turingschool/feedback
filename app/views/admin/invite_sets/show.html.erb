@@ -1,0 +1,6 @@
+<br/><div class="text-center">
+  <h3>Project Groups</h3><br/>
+  <% @invite_set.groups.lines.each_with_index do |g, i| %>
+    <%=i+1%>: <%=g%><br/><br/>
+  <%end%>
+</div>

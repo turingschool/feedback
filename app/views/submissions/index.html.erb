@@ -1,0 +1,22 @@
+<div class="row"><br/>
+<h2>Please rate these submissions to recieve your FeedBack</h2><hr/>
+  <%@submissions.each do |submission|%>
+    <div class="col-sm-4">
+      <div class="panel panel-info" style="height:250px;overflow-y:scroll;">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            Score: <%=submission.peer_review_score%>
+          </h3>
+        </div>
+        <div class="panel-body">
+          <%=submission.comments%><hr/>
+          <div class="text-center">
+          <%=binding.pry%>
+            <a href="/positive/<%=submission.id%>?uid=<%=params[:uid]%>" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback">Positive</a>
+            <a href="/negative/<%=submission.id%>?uid=<%=params[:uid]%>" class="btn btn-warning" data-toggle="tooltip" title="Not Helpful">Negative</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%end%>
+</div>

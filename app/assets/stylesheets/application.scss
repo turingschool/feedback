@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+.comment-body{
+  height:200px;
+  width:100%;
+  overflow-y:scroll;
+}
+
+.inline-errors{
+  background-color: red;
+}
+
+.invite-sets{
+  div.invite-set-row:hover{
+    background-color: red;
+  }
+}

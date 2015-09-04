@@ -1,0 +1,17 @@
+<div class="text-center">
+  <h1>Create a New Project</h1>
+
+  <%= form_for @invite_set, url: admin_invite_sets_path, method: :post do |f| %>
+    <p>
+      <%= f.label 'title', 'Project Name' %><br/>
+      <%= f.text_field 'title', :id => 'title', style: "width:400px;", required: true %>
+    </p>
+    <p>
+      <%= f.label 'groups', 'Project Groups' %><br/>
+      <%= f.text_area 'groups', :id => 'groups', rows: 20, cols: 50, required: true %>
+    </p>
+    <p>
+      <%= f.submit 'Send Invites', :id => 'submit' %>
+    </p>
+  <% end %>
+</div>
