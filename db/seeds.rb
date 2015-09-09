@@ -1,5 +1,5 @@
 User.create!(name: "Tim", email: "tjmee90@gmail.com")
-User.create!(name: "Mike", email: "mike@example.com")
+User.create!(name: "Mike", email: "tjmee90@gmail.com")
 User.create!(name: "Josh", email: "josh@example.com")
 User.create!(name: "Tess", email: "tess@example.com")
 
