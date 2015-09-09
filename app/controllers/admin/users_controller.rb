@@ -1,9 +1,5 @@
 class Admin::UsersController < ApplicationController
 
-  def dashboard
-    @user = current_user || User.new
-  end
-
   def index
     @users = User.all
   end
