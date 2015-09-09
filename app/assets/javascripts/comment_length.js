@@ -5,6 +5,8 @@ $(document).ready(function(){
 
     if(text.length >=  "240") {
       $('#characters').css('background-color', 'red').css('width', '200').addClass('text-center');
+    } else {
+      $('#characters').css('background-color', '').css('width', '200').addClass('text-center');
     }
   });
 
