@@ -1,67 +1,16 @@
-<div class="row"><br/>
-<h2>Negative FeedBack Submissions</h2><hr/>
-  <%@bad_submissions.each do |submission|%>
-    <div class="col-sm-6">
-      <div class="panel panel-info" style="height:250px;overflow-y:scroll;">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            Score: <%=submission.peer_review_score%>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <%=submission.comments%><hr/>
-          <%=submission.feedback_from_id%><hr/>
-          <%=submission.feedback_to_id%><hr/>
-          <div class="text-center">
-            <a href="/positive/<%=submission.id%>" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback">Positive</a>
-            <a href="/negative/<%=submission.id%>" class="btn btn-warning" data-toggle="tooltip" title="Not Helpful">Negative</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  <%end%>
-</div>
+<div class="container">
+  <div class="row"><br/>
+    <h3>Negative FeedBack Submissions</h3><hr/>
+    <%= render partial: "table", locals: {submissions: @bad_submissions} %>
+  </div>
 
-<div class="row"><br/>
-<h2>Waiting in Limbo FeedBack Submissions</h2><hr/>
-  <%@limbo_submissions.each do |submission|%>
-    <div class="col-sm-4">
-      <div class="panel panel-info" style="height:250px;overflow-y:scroll;">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            Score: <%=submission.peer_review_score%>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <%=submission.comments%><hr/>
-          <div class="text-center">
-            <a href="/positive/<%=submission.id%>" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback">Positive</a>
-            <a href="/negative/<%=submission.id%>" class="btn btn-warning" data-toggle="tooltip" title="Not Helpful">Negative</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  <%end%>
-</div>
+  <div class="row"><br/>
+    <h3>Waiting in Limbo FeedBack Submissions</h3><hr/>
+    <%= render partial: "table", locals: {submissions: @limbo_submissions} %>
+  </div>
 
-<div class="row"><br/>
-<h2>Positive & Delivered FeedBack Submissions</h2><hr/>
-  <%@good_submissions.each do |submission|%>
-    <div class="col-sm-4">
-      <div class="panel panel-info" style="height:250px;overflow-y:scroll;">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            Score: <%=submission.peer_review_score%>
-          </h3>
-        </div>
-        <div class="panel-body">
-          <%=submission.comments%><hr/>
-          <div class="text-center">
-            <a href="/positive/<%=submission.id%>" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback">Positive</a>
-            <a href="/negative/<%=submission.id%>" class="btn btn-warning" data-toggle="tooltip" title="Not Helpful">Negative</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  <%end%>
+  <div class="row"><br/>
+    <h3>Positive & Delivered FeedBack Submissions</h3><hr/>
+    <%= render partial: "table", locals: {submissions: @good_submissions} %>
+  </div>
 </div>
