@@ -19,7 +19,7 @@ class SubmissionsController < ApplicationController
     )
     if @submission.save
       @invite.completed!
-      redirect_to submissions_path(uid: params[:submission][:user_id])
+      redirect_to submissions_path(uid: @invite.feedback_from)
     else
       render :new
     end
