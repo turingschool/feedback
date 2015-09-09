@@ -3,11 +3,12 @@ require "rails_helper"
 RSpec.describe InviteMailer, type: :mailer do
   describe('create invite email') do
     let(:user_from) { User.create(name: "Tim Mee", email: "tim@example.com") }
+    let(:user_to) { User.create(name: "John Nee", email: "john@example.com") }
 
     let(:full_subject) { "FeedBack Requested" }
 
     before(:each) do
-      @email = InviteMailer.create_invite(user_from).deliver_now
+      @email = InviteMailer.create_invite(user_from, user_to, "238b282836g76").deliver_now
     end
 
     it "sends a welcome email" do
