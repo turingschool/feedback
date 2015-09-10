@@ -1,8 +1,38 @@
 <div class="container">
   <h3>Students</h3><br/>
+
+  <div class="row well">
+    <%= form_for @user, url: admin_users_path, method: :post do |f| %>
+      <div class="col-sm-4">
+        <p>
+          <%= f.label 'Name', 'Name' %><br/>
+          <%= f.text_field 'name', :id => 'name', cols: 50, required: true %>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <p>
+          <%= f.label 'Cohort', 'Cohort' %><br/>
+          <%= f.text_field 'cohort', :id => 'cohort', required: true %>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <p>
+          <%= f.label 'Email', 'Email' %><br/>
+          <%= f.text_field 'email', :id => 'email', required: true %>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <p>
+          <%= f.submit 'Create User', :id => 'submit' %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+
   <div class="input-group col-sm-6"> <span class="input-group-addon">Search</span>
     <input id="filter" type="text" class="form-control" placeholder="Type Search Here">
-  </div><hr>
+  </div>
+  <hr>
   <div class="panel panel-primary filterable">
     <div class="panel-heading">
       <h3 class="panel-title">Students</h3>

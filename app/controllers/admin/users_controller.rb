@@ -1,7 +1,8 @@
 class Admin::UsersController < ApplicationController
 
   def index
-    @users = User.all
+    @user ||= User.new
+    @users  = User.all
   end
 
   def update
@@ -9,6 +10,13 @@ class Admin::UsersController < ApplicationController
     if user.update_attributes(user_params)
       redirect_to admin_users_path
     else
+      redirect_to admin_users_path
+    end
+  end
+
+  def create
+    user = User.create(user_params)
+    if user.save
       redirect_to admin_users_path
     end
   end
