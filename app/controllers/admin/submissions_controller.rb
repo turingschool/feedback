@@ -13,8 +13,8 @@ class Admin::SubmissionsController < ApplicationController
 
   def index
     all = Submission.all
-    @good_submissions  = all.where(peer_review_score: 2)
-    @bad_submissions   = all.where(peer_review_score: -2)
+    @good_submissions  = all.constructive
+    @bad_submissions   = all.not_constructive
     @limbo_submissions = all.where(peer_review_score: -1..1)
   end
 
