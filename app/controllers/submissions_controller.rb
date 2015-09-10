@@ -5,6 +5,9 @@ class SubmissionsController < ApplicationController
     @submission = @invite.submissions.new(:feedback_for => @invite.feedback_for,
                                           :feedback_from => @invite.feedback_from,
                                           :token => params[:token ])
+    if cookies[:feedback_user].nil?
+      cookies.signed[:feedback_user] = { value: @invite.feedback_from, expires: 2.days.from_now }
+    end
   end
 
   def create
@@ -19,54 +22,42 @@ class SubmissionsController < ApplicationController
     )
     if @submission.save
       @invite.completed!
-      redirect_to submissions_path(uid: @invite.feedback_from)
+      redirect_to submissions_path
     else
       render :new
     end
   end
 
   def positive
-    update_peer_review_score(params[:uid],'+')
+    update_peer_review_score('+')
   end
 
   def negative
-    update_peer_review_score(params[:uid],'-')
-  end
-
-  def update
-    invite = Submission.find(params[:id])
-    if invite.update_attributes(submission_params)
-      flash[:success] = "Submission Updated"
-      redirect_to submissions_path
-    else
-      flash[:error] = "Could not update submission"
-      redirect_to submissions_path
-    end
+    update_peer_review_score('-')
   end
 
   def index
-    @reviews_needed = get_review_needed_count(params[:uid])
-    @submissions   = Submission.where({ peer_review_score: -1..1 })
+    @reviews_needed = get_review_needed_count
+    @submissions    = Submission.where({ peer_review_score: -1..1 })
   end
 
   private
 
-  def update_peer_review_score(user_id, type)
+  def update_peer_review_score(type)
     sub   = Submission.find(params[:id])
     score = sub.peer_review_score
-    if sub.update_attributes(peer_review_score: [score,1].inject(type.to_sym) )
-      update_user_peer_review_count(user_id)
-      redirect_to submissions_path(uid: user_id)
+    if sub.update_attributes(peer_review_score: [score,1].inject(type.to_sym))
+      update_current_user_peer_review_count
+      redirect_to submissions_path
     end
   end
 
-  def get_review_needed_count(user_id)
-    user  = User.find(user_id)
-    group = user.invites.last.invite_set.groups.lines.first
-    member_count = find_other_group_members(user, group)
+  def get_review_needed_count
+    group = current_user.invites.last.invite_set.groups.lines.first
+    find_other_group_members(group)
   end
 
-  def find_other_group_members(user, group)
+  def find_other_group_members(group)
     (group.split(likely_separators(group)).count - 1) * 3
   end
 
@@ -78,13 +69,11 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  def update_user_peer_review_count(id)
-    user = User.find(id)
-    user.update_attributes(peer_review_count: user.peer_review_count+1)
+  def update_current_user_peer_review_count
+    current_user.update_attributes(peer_review_count: current_user.peer_review_count + 1)
   end
 
   def submission_params
     params.require(:submission).permit(:peer_review_score)
   end
-
 end
