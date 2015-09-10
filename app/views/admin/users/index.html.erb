@@ -1,6 +1,5 @@
 <div class="container">
   <h3>Students</h3><br/>
-
   <div class="row well">
     <%= form_for @user, url: admin_users_path, method: :post do |f| %>
       <div class="col-sm-4">
@@ -28,7 +27,6 @@
       </div>
     <% end %>
   </div>
-
   <div class="input-group col-sm-6"> <span class="input-group-addon">Search</span>
     <input id="filter" type="text" class="form-control" placeholder="Type Search Here">
   </div>
