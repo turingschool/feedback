@@ -17,6 +17,23 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.login {
+  /*vertical-align: middle;*/
+  margin-top: 12%;
+  form {
+    color: #34495e;
+  }
+}
+
+.table-header {
+  background-color: #2980B9;
+  color: #fff;
+}
+.flash {
+  border-radius: 10px/30px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 
 .comment-body{
   height:200px;
