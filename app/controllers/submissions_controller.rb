@@ -2,11 +2,14 @@ class SubmissionsController < ApplicationController
 
   def new
     @invite = Invite.find_by(token: params[:token])
-    @submission = @invite.submissions.new(:feedback_for => @invite.feedback_for,
-                                          :feedback_from => @invite.feedback_from,
-                                          :token => params[:token ])
-    if cookies[:feedback_user].nil?
-      cookies.signed[:feedback_user] = { value: @invite.feedback_from, expires: 2.days.from_now }
+    if @invite.nil?
+      flash[:error] = "That invitation no longer exsists."
+      redirect_to root_path
+    else
+      @submission = @invite.submissions.new(:feedback_for => @invite.feedback_for,
+                                            :feedback_from => @invite.feedback_from,
+                                            :token => params[:token ])
+      check_cookies
     end
   end
 
@@ -21,6 +24,7 @@ class SubmissionsController < ApplicationController
       :again         => params[:submission][:again]
     )
     if @submission.save
+      flash[:success] = "Thanks for leaving feedback, Check below to see if you need to review any other feedback"
       @invite.completed!
       redirect_to submissions_path
     else
@@ -37,8 +41,12 @@ class SubmissionsController < ApplicationController
   end
 
   def index
-    @reviews_needed = get_review_needed_count
-    @submissions    = Submission.where({ peer_review_score: -1..1 })
+    if cookies[:feedback_user]
+      @reviews_needed = get_reviews_needed_count
+      @submissions    = Submission.where({ peer_review_score: -1..1 }).where.not({ feedback_from_id: current_user.id })
+    else
+      render file: "public/401.html"
+    end
   end
 
   private
@@ -48,25 +56,19 @@ class SubmissionsController < ApplicationController
     score = sub.peer_review_score
     if sub.update_attributes(peer_review_score: [score,1].inject(type.to_sym))
       update_current_user_peer_review_count
+      flash[:success] = "Review Score updated"
       redirect_to submissions_path
     end
   end
 
-  def get_review_needed_count
-    group = current_user.invites.last.invite_set.groups.lines.first
-    find_other_group_members(group)
-  end
-
-  def find_other_group_members(group)
-    (group.split(likely_separators(group)).count - 1) * 3
-  end
-
-  def likely_separators(group)
-    if group.include?(",")
-      ","
-    else
-      "&"
+  def check_cookies
+    if cookies[:feedback_user].nil?
+      cookies.signed[:feedback_user] = { value: @invite.feedback_from }
     end
+  end
+
+  def get_reviews_needed_count
+    Submission.where( feedback_for_id: current_user.id ).not_sent.count * 3
   end
 
   def update_current_user_peer_review_count
