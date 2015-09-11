@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(version: 20150911054635) do
     t.string   "participation"
     t.string   "again"
     t.string   "valuable"
+    t.string   "token"
     t.integer  "peer_review_score", default: 0
     t.boolean  "delivered",         default: false
-    t.string   "token"
   end
 
   create_table "users", force: :cascade do |t|

@@ -14,6 +14,8 @@ gem 'figaro'
 gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
+  gem 'simplecov'
+  gem 'better_errors'
   gem 'pry'
   gem 'rspec-rails'
   gem 'byebug'
