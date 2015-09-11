@@ -1,19 +1,28 @@
 <div class="container">
-  <h1>Invite Sets</h1>
-  <div class="invite-sets row">
-    <% @invite_sets.each do |invite_set| %>
-      <div class="invite-set-row" id="invite-set-<%= invite_set.id %>">
-        <div class="col-sm-2">
-          <%= link_to invite_set.title, admin_invite_set_path(invite_set.id) %>
-        </div>
-        <div class="col-sm-10 text-left">
-          <% if invite_set.delivered? %>
-            <span class="btn btn-primary">delivered</span>
-          <% else %>
-            <%= link_to 'deliver', deliver_admin_invite_set_path(invite_set), :method => :post, class: "btn btn-warning" %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
+  <div class="row"><br/>
+    <table class="table">
+      <thead class="panel table-header  ">
+        <tr class="panel-title panel-heading">
+          <th class="col-sm-6">Project Name</th>
+          <th class="text-center">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @invite_sets.each do |invite_set|%>
+          <tr class="invite-set-row">
+            <td>
+              <%= link_to invite_set.title, admin_invite_set_path(invite_set.id) %>
+            </td>
+            <td class="text-center">
+              <% if invite_set.delivered? %>
+                <span class="btn btn-success">delivered</span>
+              <% else %>
+                <%= link_to 'deliver', deliver_admin_invite_set_path(invite_set), :method => :post, class: "btn btn-warning" %>
+              <% end %>
+            </td>
+          </tr>
+        <%end%>
+      </tbody>
+    </table>
   </div>
 </div>

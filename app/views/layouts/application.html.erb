@@ -8,7 +8,10 @@
 </head>
 <body>
 
-  <%= render "layouts/nav_bar" %>
+  <%if current_user.admin?%>
+    <%= render "layouts/nav_bar" %>
+  <%end%>
+  <%= render partial: "layouts/flash" %>
   <%= yield %>
 
 </body>

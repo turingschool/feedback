@@ -22,41 +22,38 @@
       </div>
       <div class="col-sm-4">
         <p>
+          <%= f.hidden_field :password, :value => @password %>
+          <%= f.hidden_field :password_confirmation, :value => @password %>
           <%= f.submit 'Create User', :id => 'submit' %>
         </p>
       </div>
     <% end %>
   </div>
-  <div class="input-group col-sm-6"> <span class="input-group-addon">Search</span>
-    <input id="filter" type="text" class="form-control" placeholder="Type Search Here">
-  </div>
   <hr>
-  <div class="panel panel-primary filterable">
-    <div class="panel-heading">
-      <h3 class="panel-title">Students</h3>
-    </div>
-    <table class="table tablesorter">
+  <div class="panel">
+    <table class="table">
       <thead>
-        <tr class="filters">
-          <th><a class="form-control">ID</th>
-          <th><a class="form-control">Name</th>
-          <th><a class="form-control">Email</th>
-          <th><a class="form-control">Cohort</th>
-          <th><a class="form-control">Delivery %</th>
-          <th><a class="form-control">Peer Review Count</th>
+        <tr class="table-header">
+          <th>Name</th>
+          <th>Email</th>
+          <th>Cohort</th>
+          <th>Delivery %</th>
+          <th>Peer Review Count</th>
+          <th class="text-center">Actions</th>
         </tr>
       </thead>
-      <tbody class="searchable">
+      <tbody class="searchable text-center">
         <% @users.each do |user| %>
           <%= form_for user, url: admin_user_path(user.id) do |f| %>
           <tr>
-            <td class="id"><%= user.id%></td>
             <td class="name"><%=  f.text_field :name %></td>
             <td class="email"><%= f.text_field :email %></td>
-            <td class="cohort"><%= f.text_field :cohort %></td>
-            <td class="delivery_percentage text-center"><%= user.delivery_percentage %>%</td>
-            <td class="peer_review_count text-center"><%= user.peer_review_count %></td>
-            <td class="update text-center"><%= f.submit "Update User", class: "btn btn-warning btn-xs"%></td>
+            <td class="cohort"><%= f.text_field :cohort, :size=>"5" %></td>
+            <td class="delivery_percentage"><%= user.delivery_percentage %>%</td>
+            <td class="peer-review-count"><%= user.peer_review_count %></td>
+            <td class="actions">
+              <%= f.submit "Update User", class: "btn btn-warning btn-xs"%>
+              <%= link_to "Deliver All To User", deliver_all_path(user.id), class: "btn btn-primary btn-xs"%></td>
           </tr>
           <% end %>
         <% end %>

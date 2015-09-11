@@ -1,9 +1,8 @@
 <div class="container">
   <div class="row"><br/>
-    <%submissions.each do |submission|%>
       <table class="table">
         <thead>
-          <tr>
+          <tr class="table-header">
             <th>#</th>
             <th class="col-sm-6">Comment</th>
             <th class="">To</th>
@@ -13,20 +12,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row"><%=submission.id%></th>
-            <td scope="row"><%=submission.comments%></td>
-            <th scope="row"><%=User.find(submission.feedback_for_id).name%></th>
-            <th scope="row"><%=User.find(submission.feedback_from_id).name%></th>
-            <td class="text-center">
-              <a href="/positive/<%=submission.id%>?uid=1" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
-              <a href="/negative/<%=submission.id%>?uid=1 " class="btn btn-danger" data-toggle="tooltip" title="Not Helpful"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-            </td>
-            <td class="text-center"><%=submission.peer_review_score%></td>
-          </tr>
+          <%submissions.each do |submission|%>
+            <tr>
+              <th scope="row"><%=submission.id%></th>
+              <td scope="row"><%=submission.comments%></td>
+              <th scope="row"><%=User.find(submission.feedback_for_id).name%></th>
+              <th scope="row"><%=User.find(submission.feedback_from_id).name%></th>
+              <td class="text-center">
+                <a href="/positive/<%=submission.id%>?uid=1" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+                <a href="/negative/<%=submission.id%>?uid=1 " class="btn btn-danger" data-toggle="tooltip" title="Not Helpful"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+              </td>
+              <td class="text-center"><%=submission.peer_review_score%></td>
+            </tr>
+          <%end%>
         </tbody>
       </table>
-    <%end%>
   </div>
 </div>
 

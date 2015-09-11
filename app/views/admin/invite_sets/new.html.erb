@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h1>Create a New Project</h1>
+  <h2>Create a New Project</h2>
 
   <%= form_for @invite_set, url: admin_invite_sets_path, method: :post do |f| %>
     <p>
@@ -11,7 +11,7 @@
       <%= f.text_area 'groups', :id => 'groups', rows: 20, cols: 50, required: true %>
     </p>
     <p>
-      <%= f.submit 'Send Invites', :id => 'submit' %>
+      <%= f.submit 'Create Invites', :id => 'submit', class: "btn btn-lg btn-primary" %>
     </p>
   <% end %>
 </div>
