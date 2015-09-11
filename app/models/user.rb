@@ -1,13 +1,18 @@
 class User < ActiveRecord::Base
+  has_secure_password
+  validates :password, confirmation: true
   # validates :email, uniqueness: true
   has_many :invites, :foreign_key => :feedback_from_id
   after_save :check_peer_review_count
-
 
   def check_peer_review_count
     if peer_review_count >= 3
       send_submission_email ? reset_peer_review_count : true
     end
+  end
+
+  def admin?
+    admin == true
   end
 
   def send_submission_email
@@ -26,7 +31,7 @@ class User < ActiveRecord::Base
     self.save!
   end
 
-  def calculate_delivery_percent(user_from_id) #Not necessarlily delivered, but are all elegable for deilvery.
+  def calculate_delivery_percent(user_from_id) #Not necessarlily delivered, but are all elegile for deilvery.
     user  = User.find(user_from_id)
     all   = Submission.where(feedback_from_id: id)
     total = all.count
