@@ -1,7 +1,8 @@
-User.create!(name: "Tim", email: "tjmee90@gmail.com")
-User.create!(name: "Mike", email: "tjmee90@gmail.com")
-User.create!(name: "Josh", email: "josh@example.com")
-User.create!(name: "Tess", email: "tess@example.com")
+User.create!(name: "Admin", email: "tjmee90@gmail.com", password: ENV['ADMIN_PASSWORD'], password_confirmation: ENV['ADMIN_PASSWORD'], admin: true)
+User.create!(name: "Tim", email: "tjmee90@gmail.com", password: "password", password_confirmation: "password")
+User.create!(name: "Mike", email: "tjmee90@gmail.com", password: "password", password_confirmation: "password")
+User.create!(name: "Josh", email: "josh@example.com", password: "password", password_confirmation: "password")
+User.create!(name: "Tess", email: "tess@example.com", password: "password", password_confirmation: "password")
 
 InviteSet.create!(title: "Mastermind",
                  groups: "Sally MacNicholas & Morgan Miller

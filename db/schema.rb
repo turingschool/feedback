@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903220332) do
+ActiveRecord::Schema.define(version: 20150911054635) do
 
   create_table "invite_sets", force: :cascade do |t|
     t.string   "title"
@@ -28,7 +28,6 @@ ActiveRecord::Schema.define(version: 20150903220332) do
     t.boolean  "completed",        default: false
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
-    t.string   "token"
   end
 
   create_table "submissions", force: :cascade do |t|
@@ -36,23 +35,26 @@ ActiveRecord::Schema.define(version: 20150903220332) do
     t.text     "comments"
     t.integer  "feedback_from_id"
     t.integer  "feedback_for_id"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "participation"
     t.string   "again"
     t.string   "valuable"
-    t.string   "token"
     t.integer  "peer_review_score", default: 0
+    t.boolean  "delivered",         default: false
+    t.string   "token"
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "email"
     t.integer  "cohort"
     t.integer  "peer_review_count",   default: 0
     t.float    "delivery_percentage", default: 0.0
+    t.boolean  "admin",               default: false
+    t.string   "password_digest"
   end
 
 end
