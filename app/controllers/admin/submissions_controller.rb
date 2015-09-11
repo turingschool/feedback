@@ -1,12 +1,10 @@
-class Admin::SubmissionsController < ApplicationController
+class Admin::SubmissionsController < Admin::BaseAdminController
 
   def update
     invite = Submission.find(params[:id])
     if invite.update_attributes(submission_params)
-      flash[:success] = "Submission Updated"
       redirect_to admin_submissions_path
     else
-      flash[:error] = "Could not update submission"
       redirect_to admin_submissions_path
     end
   end

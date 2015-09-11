@@ -11,6 +11,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'formtastic'
 gem 'jquery-rails'
 gem 'figaro'
+gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
   gem 'pry'
