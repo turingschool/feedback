@@ -18,4 +18,13 @@ module ApplicationHelper
       form.label(category, "Strongly Agree", :value => 'strongly_agree')
     ].join("\n").html_safe
   end
+
+  def bootstrap(name)
+    case name
+    when 'error'
+      'danger'
+    else
+      name
+    end
+  end
 end

@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row"><br/>
+    <h3>Please rate <%=@reviews_needed%> submissions to recieve your FeedBack</h3><hr/>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th class="col-sm-6">Comment</th>
+          <th class="text-center">FeedBack Review</th>
+          <th class="text-center">FeedBack Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%@submissions.each do |submission|%>
+          <tr>
+            <td><%=submission.id%></td>
+            <td><%=submission.comments%></td>
+            <td class="text-center">
+              <a href="/positive/<%=submission.id%>?uid=<%=params[:uid]%>" class="btn btn-success" data-toggle="tooltip" title="Constructive feeback"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a>
+              <a href="/negative/<%=submission.id%>?uid=<%=params[:uid]%>" class="btn btn-danger" data-toggle="tooltip" title="Not Helpful"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+            </td>
+            <td class="text-center"><%=submission.peer_review_score%></td>
+          </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+

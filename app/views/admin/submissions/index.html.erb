@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row"><br/>
+    <h3>Negative FeedBack Submissions</h3><hr/>
+    <%= render partial: "table", locals: {submissions: @bad_submissions} %>
+  </div>
+
+  <div class="row"><br/>
+    <h3>Waiting in Limbo FeedBack Submissions</h3><hr/>
+    <%= render partial: "table", locals: {submissions: @limbo_submissions} %>
+  </div>
+
+  <div class="row"><br/>
+    <h3>Positive & Delivered FeedBack Submissions</h3><hr/>
+    <%= render partial: "table", locals: {submissions: @good_submissions} %>
+  </div>
+</div>

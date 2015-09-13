@@ -1,20 +1,60 @@
-<h1>New Submission</h1>
+<div class="container">
+  <div id='user-for- name'>
+    Feedback for: <strong><%= @submission.feedback_for.name %></strong>
+  </div>
+  <div id='title'>
+    Project Title: <strong><%= @invite.invite_set.title %></strong>
+  </div><br/>
+</div>
 
+<div class="container">
 <%= semantic_form_for @submission do |f| %>
-  <ul>
-    <li id='feedback-for'>
-      Feedback for: <%= @submission.feedback_for.name %>
-    </li>
-    <li id='title'>
-      Working on: <%= @submission.invite.invite_set.title %>
-    </li>
-  </ul>
   <%= f.inputs do %>
-    <%= f.input :participation, :as => :radio, :collection => Submission.options, :hint => "I feel you participated to the best of your abilities." %>
-    <%= f.input :valuable, :as => :radio, :collection => Submission.options, :hint => "I found our collaboration valuable and productive." %>
-    <%= f.input :again, :as => :radio, :collection => Submission.options, :hint => "I look forward to collaborating with you again." %>
-    <%= f.input :comments %>
-    <%= f.hidden_field :invite_id, :value => @invite.id %>
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">I feel you participated to the best of your abilities.</h3>
+          </div>
+          <div class="panel-body">
+             <%= f.input :participation, :as => :radio, :collection => Submission.options, requried: true %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">I found our collaboration valuable and productive.</h3>
+          </div>
+          <div class="panel-body">
+            <%= f.input :valuable, :as => :radio, :collection => Submission.options, requried: true %>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">I look forward to collaborating with you again.</h3>
+          </div>
+          <div class="panel-body">
+            <%= f.input :again, :as => :radio, :collection => Submission.options, requried: true%>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8" id="new-submission-comment">
+        <strong><%= f.label "Comments"%></strong><br/>
+        <%= f.text_area :comments, size: "70x6", requried: true, class: "comment", placeholder: "You're tireless effort to keep the team working together and on track was an inspiration for me and all humanity.  Thanks, Dude." %>
+        <div id="characters">
+          <span id="char-count">0</span>/240 characters
+        </div>
+        <%= f.hidden_field :invite_id, :value => @invite.id %>
+        <%= f.hidden_field :user_id, :value => @invite.feedback_from_id %>
+      </div>
+      <div class="col-sm-4 text-center">
+        <%= f.submit 'Submit FeedBack', :id => 'submit', class: "btn btn-success btn-lg", style: "margin-top: 100px;" %>
+      </div>
   <% end %>
-  <%= f.submit 'Submit', :id => 'submit' %>
 <% end %>
+</div>

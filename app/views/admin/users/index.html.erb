@@ -1,0 +1,63 @@
+<div class="container">
+  <h3>Students</h3><br/>
+  <div class="row well">
+    <%= form_for @user, url: admin_users_path, method: :post do |f| %>
+      <div class="col-sm-4">
+        <p>
+          <%= f.label 'Name', 'Name' %><br/>
+          <%= f.text_field 'name', :id => 'name', cols: 50, required: true %>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <p>
+          <%= f.label 'Cohort', 'Cohort' %><br/>
+          <%= f.text_field 'cohort', :id => 'cohort', required: true %>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <p>
+          <%= f.label 'Email', 'Email' %><br/>
+          <%= f.text_field 'email', :id => 'email', required: true %>
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <p>
+          <%= f.hidden_field :password, :value => @password %>
+          <%= f.hidden_field :password_confirmation, :value => @password %>
+          <%= f.submit 'Create User', :id => 'submit' %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+  <hr>
+  <div class="panel">
+    <table class="table">
+      <thead>
+        <tr class="table-header">
+          <th>Name</th>
+          <th>Email</th>
+          <th>Cohort</th>
+          <th>Delivery %</th>
+          <th>Peer Review Count</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="searchable text-center">
+        <% @users.each do |user| %>
+          <%= form_for user, url: admin_user_path(user.id) do |f| %>
+          <tr>
+            <td class="name"><%=  f.text_field :name %></td>
+            <td class="email"><%= f.text_field :email %></td>
+            <td class="cohort"><%= f.text_field :cohort, :size=>"5" %></td>
+            <td class="delivery_percentage"><%= user.delivery_percentage %>%</td>
+            <td class="peer-review-count"><%= user.peer_review_count %></td>
+            <td class="actions">
+              <%= f.submit "Update User", class: "btn btn-warning btn-xs"%>
+              <%= link_to "Deliver All To User", deliver_all_path(user.id), class: "btn btn-primary btn-xs"%></td>
+          </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

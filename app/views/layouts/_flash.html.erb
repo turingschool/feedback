@@ -1,0 +1,9 @@
+<div class="row text-center"><br/>
+  <div class="col-sm-4"></div>
+    <% flash.each do |name, msg| %>
+      <div class="col-sm-4">
+        <%= content_tag :div, msg, :class => " flash btn-#{bootstrap(name)}" %>
+      </div>
+    <% end %>
+  <div class="col-sm-4"></div>
+</div>
