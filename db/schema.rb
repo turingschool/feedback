@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150911054635) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "invite_sets", force: :cascade do |t|
     t.string   "title"
     t.text     "groups"
