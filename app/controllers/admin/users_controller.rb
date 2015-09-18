@@ -10,7 +10,13 @@ class Admin::UsersController < Admin::BaseAdminController
     if params[:students_list]
       students_list ||= params[:students_list]
       cohort ||= params[:cohort]
-      create_students(students_list, cohort)
+      if create_students(students_list, cohort)
+        flash[:success] = "New Cohort Created"
+        redirect_to admin_users_path
+      else
+        flash[:error] = "Unable to create new cohort"
+        redirect_to admin_new_users_path
+      end
     end
   end
 
@@ -20,7 +26,7 @@ class Admin::UsersController < Admin::BaseAdminController
       flash[:success] = "User Updated"
       redirect_to admin_users_path
     else
-      flash[:success] = "Unable to update User"
+      flash[:error] = "Unable to update User"
       redirect_to admin_users_path
     end
   end
