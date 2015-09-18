@@ -63,7 +63,7 @@ class SubmissionsController < ApplicationController
 
   def check_cookies
     if cookies[:feedback_user].nil?
-      cookies.signed[:feedback_user] = { value: @invite.feedback_from }
+      cookies.signed[:feedback_user] = { value: @invite.feedback_from, expires: 2.days.from_now }
     end
   end
 
