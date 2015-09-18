@@ -1,6 +1,6 @@
 <div class="container">
   <h3>Students</h3><br/>
-  <div class="row well">
+  <div class="col-sm-7 well">
     <%= form_for @user, url: admin_users_path, method: :post do |f| %>
       <div class="col-sm-4">
         <p>
@@ -24,12 +24,14 @@
         <p>
           <%= f.hidden_field :password, :value => @password %>
           <%= f.hidden_field :password_confirmation, :value => @password %>
-          <%= f.submit 'Create User', :id => 'submit' %>
+          <%= f.submit 'Create Student', :id => 'submit', class: "btn btn-primary " %>
         </p>
       </div>
     <% end %>
   </div>
-  <hr>
+  <div class="col-sm-5 text-center">
+    <%= link_to "Add New Cohort", new_admin_user_path, class: "btn btn-primary btn-lg"%>
+  </div>
   <div class="panel">
     <table class="table">
       <thead>
