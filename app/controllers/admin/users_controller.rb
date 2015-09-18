@@ -6,6 +6,14 @@ class Admin::UsersController < Admin::BaseAdminController
     @password = SecureRandom.base64
   end
 
+  def new
+    if params[:students_list]
+      students_list ||= params[:students_list]
+      cohort ||= params[:cohort]
+      create_students(students_list, cohort)
+    end
+  end
+
   def update
     user = User.find(params[:id])
     if user.update_attributes(user_params)
@@ -42,5 +50,23 @@ class Admin::UsersController < Admin::BaseAdminController
 
   def user_params
     params.require(:user).permit(:email, :name, :cohort, :password, :password_confirmation)
+  end
+
+  def create_students(student_list, cohort)
+    students = split_cohort(student_list)
+    students.each do |student|
+      User.create!(cohort: cohort,
+                   name: student[:name],
+                   email: student[:email],
+                   password: SecureRandom.base64)
+    end
+  end
+
+  def split_cohort(list)
+    lines = list.split(',')
+    lines.map do |line|
+      info = line.split("<").map{|x|x.gsub(/"|\/|>/, '')}
+      {name: info[0], email: info[1]}
+    end
   end
 end
