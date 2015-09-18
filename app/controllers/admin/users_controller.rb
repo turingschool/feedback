@@ -71,7 +71,8 @@ class Admin::UsersController < Admin::BaseAdminController
   def split_cohort(list)
     lines = list.split(',')
     lines.map do |line|
-      info = line.split("<").map{|x|x.gsub(/"|\/|>/, '')}
+      binding.pry
+      info = line.split("<").map{|x|x.gsub(/"|\/|>/, '').strip}
       {name: info[0], email: info[1]}
     end
   end
