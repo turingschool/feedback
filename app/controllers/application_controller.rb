@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if cookies[:feedback_user]
-      @current_user = User.find(cookies.signed[:feedback_user]['id'])
+      @current_user = User.find(cookies.signed[:feedback_user])
     else
       @current_user ||= User.new
     end

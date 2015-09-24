@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
-      cookies.signed[:feedback_user] = user
+      cookies.signed[:feedback_user] = user.id
       redirect_to admin_invite_sets_path
     else
       flash[:error] = "Wrong Email or Password"

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, confirmation: true
   # validates :email, uniqueness: true
-  has_many :invites, :foreign_key => :feedback_from_id
+  has_many :invites, :foreign_key => :feedback_from_id, dependent: :destroy
   after_save :check_peer_review_count
 
   def check_peer_review_count

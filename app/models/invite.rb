@@ -2,7 +2,7 @@ class Invite < ActiveRecord::Base
   belongs_to :invite_set
   belongs_to :feedback_from, :class_name => User
   belongs_to :feedback_for, :class_name => User
-  has_many   :submissions
+  has_many   :submissions, dependent: :destroy
   before_save :generate_token
 
   def self.pending
