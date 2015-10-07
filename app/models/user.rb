@@ -12,10 +12,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def admin?
-    admin == true
-  end
-
   def send_submission_email
     submission = submissions.constructive.first
     if submission.present?
@@ -25,16 +21,16 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  private
   def reset_peer_review_count
     self.peer_review_count = self.peer_review_count - 3
     self.save!
   end
 
-  private
-
   def calculate_delivery_percent(user_from_id) #Not necessarlily delivered, but are all elegile for deilvery.
     user  = User.find(user_from_id)
-    all   = Submission.where(feedback_from: id)
+    all   = user.submissions
     total = all.count
     sent  = all.where(peer_review_score: 2).count
     user.delivery_percentage = (sent).to_f/(total).to_f*100
