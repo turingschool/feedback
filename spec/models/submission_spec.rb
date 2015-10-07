@@ -18,7 +18,6 @@ RSpec.describe Submission, type: :model do
 
   describe "checks if eliable to send after save" do
     it "will check user user review count if peer score is 2" do
-      binding.pry
       submission.peer_review_score = 2
       submission.save!
       expect(submisison.send(check_to_send)).to be(true)
