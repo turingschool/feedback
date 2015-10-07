@@ -54,8 +54,9 @@
             <td class="delivery_percentage"><%= user.delivery_percentage %>%</td>
             <td class="peer-review-count"><%= user.peer_review_count %></td>
             <td class="actions">
+              <%= link_to "Deliver All To User", url_for(params), class: "btn btn-primary btn-xs"%>
               <%= f.submit "Update User", class: "btn btn-warning btn-xs"%>
-              <%= link_to "Deliver All To User", deliver_all_path(user.id), class: "btn btn-primary btn-xs"%></td>
+              <%= link_to "Delete", admin_user_path(user.id), method: "DELETE", class: "btn btn-danger btn-xs"%></td>
           </tr>
           <% end %>
         <% end %>
