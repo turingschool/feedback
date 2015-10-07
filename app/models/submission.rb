@@ -1,7 +1,7 @@
 class Submission < ActiveRecord::Base
   belongs_to :invite
-  belongs_to :feedback_from, :class_name => User
-  belongs_to :feedback_for, :class_name => User
+  has_one :feedback_from, through: :invite
+  has_one :feedback_for,  through: :invite
   validates_presence_of :participation
   validates_presence_of :valuable
   validates_presence_of :again
@@ -41,11 +41,11 @@ class Submission < ActiveRecord::Base
 
   def check_to_send
     if peer_review_score == 2
-      check_user_to_score_count(feedback_for_id)
+      check_user_score_count(feedback_for.id)
     end
   end
 
-  def check_user_to_score_count(uid)
+  def check_user_score_count(uid)
     user = User.find(uid)
     if user.peer_review_count >= 3
       user.send_submission_email
