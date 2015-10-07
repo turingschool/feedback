@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911012740) do
+ActiveRecord::Schema.define(version: 20150929154206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,14 +37,11 @@ ActiveRecord::Schema.define(version: 20150911012740) do
   create_table "submissions", force: :cascade do |t|
     t.integer  "invite_id"
     t.text     "comments"
-    t.integer  "feedback_from_id"
-    t.integer  "feedback_for_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "participation"
     t.string   "again"
     t.string   "valuable"
-    t.string   "token"
     t.integer  "peer_review_score", default: 0
     t.boolean  "delivered",         default: false
   end

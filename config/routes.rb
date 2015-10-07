@@ -1,17 +1,15 @@
 Rails.application.routes.draw do
   root 'sessions#new'
 
-  get   '/login',   to: 'sessions#new'
-  post   '/login',  to: 'sessions#create'
-  delete '/logout', to: 'sessions#destroy'
-  get "positive/:id",          to: "submissions#positive",    as: "positive"
-  get "negative/:id",          to: "submissions#negative",    as: "negative"
-  get "submission/:token",     to: "submissions#new",         as: "submission"
-  get "admin/deliver-all/:id", to: "admin/users#deliver_all", as: "deliver_all"
+  get   '/login',          to: 'sessions#new'
+  post   '/login',         to: 'sessions#create'
+  delete '/logout',        to: 'sessions#destroy'
+  get "submission/:token", to: "submissions#new"
 
-  resources :submissions, only: [:index, :create]
+  resources :submissions, only: [:index, :create, :update]
   resources :invites
   namespace :admin do
+    get "deliver-all/:id",  to: "admin/users#deliver_all", as: "deliver_all" #just an idea for later
     resources :submissions, only: [:index, :update]
     resources :users
     resources :invite_sets do
