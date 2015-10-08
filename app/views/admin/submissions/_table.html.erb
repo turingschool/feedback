@@ -19,8 +19,8 @@
               <th scope="row"><%=submission.feedback_for.name%></th>
               <th scope="row"><%=submission.feedback_from.name%></th>
               <td class="text-center">
-                <%= link_to "+", submission_path(submission.id, :type => '+'), method: 'PUT', class: "btn btn-tiny btn-primary"%>
-                <%= link_to "-", submission_path(submission.id, :type => '-'), method: 'PUT', class: "btn btn-tiny btn-danger"%>
+                <%= link_to "+", admin_submission_path(submission.id, :type => '+'), method: 'PUT', class: "btn btn-tiny btn-primary"%>
+                <%= link_to "-", admin_submission_path(submission.id, :type => '-'), method: 'PUT', class: "btn btn-tiny btn-danger"%>
               </td>
               <td class="text-center"><%=submission.peer_review_score%></td>
             </tr>

@@ -27,14 +27,9 @@ class SubmissionsController < ApplicationController
     sub   = Submission.find(params[:id])
     score = sub.peer_review_score
     if sub.update_attributes(peer_review_score: [score,1].inject(params[:type].to_sym))
-      if current_user.admin?
-          flash[:success] = "Review Score updated"
-          redirect_to admin_submissions_path
-        else
-          update_current_user_peer_review_count
-          flash[:success] = "Review Score updated"
-          redirect_to submissions_path
-      end
+      update_current_user_peer_review_count
+      flash[:success] = "Review Score updated"
+      redirect_to submissions_path
     end
   end
 
