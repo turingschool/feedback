@@ -39,11 +39,17 @@ class Admin::UsersController < Admin::BaseAdminController
     end
   end
 
+  def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User has been deleted"
+    redirect_to admin_users_path
+  end
+
   def deliver_all
     user       = User.find(params[:id])
-    submission = Submission.where(feedback_for_id: user.id).constructive
+    submission = Submission.where(feedback_for: user).constructive
     if submission.present?
-      send_all_contructive_submissions_to_user(user.id)
+      send_all_contructive_submissions_to_user(user.id) #not implemented
       flash[:success] = "All Eligible Submissions Sent"
       redirect_to admin_users_path
     else
