@@ -2,8 +2,8 @@ class Admin::SubmissionsController < Admin::BaseAdminController
 
   def update
     submission = Submission.find(params[:id])
-    if submission.update_attributes(submission_params)
-      flash[:success] = "Submission score updated"
+    if submission.update_attributes(peer_review_score: [score,1].inject(params[:type].to_sym))
+      flash[:success] = "Review Score updated"
       redirect_to admin_submissions_path
     else
       flash[:error] = "Unable to update submission score"
