@@ -2,6 +2,7 @@ class Admin::SubmissionsController < Admin::BaseAdminController
 
   def update
     submission = Submission.find(params[:id])
+    score = submission.peer_review_score
     if submission.update_attributes(peer_review_score: [score,1].inject(params[:type].to_sym))
       flash[:success] = "Review Score updated"
       redirect_to admin_submissions_path
