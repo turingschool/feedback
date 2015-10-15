@@ -28,7 +28,8 @@ class Submission < ActiveRecord::Base
   end
 
   def delivered!
-    delivered = true
+    self.delivered = true
+    self.save!
   end
 
   def word_to_score(word)
