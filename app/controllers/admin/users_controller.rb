@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::BaseAdminController
 
   def index
     @user   ||= User.new
-    @users  ||= User.all
+    @users  ||= User.all.order('cohort')
     @password = SecureRandom.base64
   end
 
