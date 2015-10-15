@@ -8,15 +8,24 @@ class User < ActiveRecord::Base
 
   def check_peer_review_count
     if peer_review_count >= 3
-      send_submission_email
+      send_submission_email_for
     end
   end
 
   def send_submission_email
     submission = submissions.not_sent.constructive.first
     if submission.present?
-      title = submission.project_title
-      SubmissionMailer.send_submission(submission, self, title).deliver_now
+      SubmissionMailer.send_submission(submission).deliver_now
+      submission.delivered!
+      reset_peer_review_count
+      calculate_delivery_percent(submission.feedback_from.id)
+    end
+  end
+
+  def send_submisison_email_for
+    submission = Submission.where(feedback_for: self).not_sent.constructive.first
+    if submission.present?
+      SubmissionMailer.send_submission(submission).deliver_now
       submission.delivered!
       reset_peer_review_count
       calculate_delivery_percent(submission.feedback_from.id)
