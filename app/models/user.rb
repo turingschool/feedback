@@ -8,38 +8,32 @@ class User < ActiveRecord::Base
 
   def check_peer_review_count
     if peer_review_count >= 3
-      send_submission_email_for
+      send_user_one_submission_email
     end
   end
 
-  def send_submission_email
-    submission = submissions.not_sent.constructive.first
-    if submission.present?
-      SubmissionMailer.send_submission(submission).deliver_now
-      submission.delivered!
-      reset_peer_review_count
-      calculate_delivery_percent(submission.feedback_from.id)
-    end
-  end
-
-  def send_submisison_email_for
-    submission = Submission.where(feedback_for: self).not_sent.constructive.first
-    if submission.present?
-      SubmissionMailer.send_submission(submission).deliver_now
-      submission.delivered!
-      reset_peer_review_count
-      calculate_delivery_percent(submission.feedback_from.id)
-    end
+  def send_submission_email(submission)
+    SubmissionMailer.send_submission(submission).deliver_now
+    submission.delivered!
+    reset_peer_review_count
+    calculate_delivery_percent(submission.feedback_from.id)
   end
 
   private
+
+  def send_user_one_submission_email
+    submission  = Submission.find { |x| x.invite.feedback_for == self && x.peer_review_score == 2 && x.delivered == false}
+    if submission.present?
+      send_submission_email(submission)
+    end
+  end
 
   def reset_peer_review_count
     self.peer_review_count = self.peer_review_count - 3
     self.save!
   end
 
-  def calculate_delivery_percent(user_from_id) #Not necessarlily delivered, but are all elegile for deilvery.
+  def calculate_delivery_percent(user_from_id)
     user  = User.find(user_from_id)
     all   = user.submissions
     total = all.count

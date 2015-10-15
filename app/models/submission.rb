@@ -53,7 +53,7 @@ class Submission < ActiveRecord::Base
   def check_user_score_count(uid)
     user = User.find(uid)
     if user.peer_review_count >= 3
-      user.send_submission_email
+      user.send_submission_email(self)
     end
   end
 end
