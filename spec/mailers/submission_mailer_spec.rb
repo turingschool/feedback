@@ -7,7 +7,7 @@ RSpec.describe SubmissionMailer, type: :mailer do
     let(:full_subject) { "New Project" }
 
     before(:each) do
-      @email = SubmissionMailer.send_submission(submission, user, full_subject).deliver_now
+      @email = SubmissionMailer.send_submission(submission).deliver_now
     end
 
     it "sends a welcome email" do
