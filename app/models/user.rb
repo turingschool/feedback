@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   def check_peer_review_count
     if peer_review_count >= 3
-      send_submission_email ? reset_peer_review_count : true
+      send_submission_email
     end
   end
 
@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
       title = submission.project_title
       SubmissionMailer.send_submission(submission, self, title).deliver_now
       submission.delivered!
+      reset_peer_review_count
       calculate_delivery_percent(submission.feedback_from.id)
     end
   end

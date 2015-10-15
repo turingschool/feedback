@@ -44,7 +44,7 @@ class Submission < ActiveRecord::Base
   private
 
   def check_to_send
-    if peer_review_score == 2
+    if peer_review_score == 2 && delivered == false
       check_user_score_count(feedback_for.id)
     end
   end
