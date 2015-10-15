@@ -27,6 +27,10 @@ class Submission < ActiveRecord::Base
     ]
   end
 
+  def delivered!
+    delivered = true
+  end
+
   def word_to_score(word)
     {
       'strongly_disagree' => -2,

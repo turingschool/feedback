@@ -13,16 +13,17 @@ class User < ActiveRecord::Base
   end
 
   def send_submission_email
-    submission = submissions.constructive.first
+    submission = submissions.not_sent.constructive.first
     if submission.present?
       title = submission.project_title
       SubmissionMailer.send_submission(submission, self, title).deliver_now
+      submission.delivered!
       calculate_delivery_percent(submission.feedback_from.id)
     end
   end
 
-
   private
+
   def reset_peer_review_count
     self.peer_review_count = self.peer_review_count - 3
     self.save!
