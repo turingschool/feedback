@@ -16,12 +16,15 @@
             </td>
             <td class="text-center">
               <% if invite_set.delivered? %>
-                <span class="btn btn-success">delivered</span>
+                <span class="btn btn-success btn-sm">delivered</span>
               <% else %>
-                <%= link_to 'deliver', deliver_admin_invite_set_path(invite_set), :method => :post, class: "btn btn-warning" %>
+                <span class="btn btn-inverse btn-sm">pending</span>
               <% end %>
             </td>
             <td class="text-center">
+              <% if !invite_set.delivered? %>
+                <%= link_to 'Deliver', deliver_admin_invite_set_path(invite_set), :method => :post, class: "btn btn-warning btn-sm" %>
+              <%end%>
               <%= link_to "Delete", admin_invite_set_path(invite_set.id), :method => :delete, class: "btn btn-danger btn-sm" %>
             </td>
           </tr>
