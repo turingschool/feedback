@@ -1,5 +1,18 @@
 <div class="text-center">
-  <h2>Create a New Project</h2>
+  <div class="row">
+    <h2>Create a new Project</h2>
+    <div class="btn-group dropdown" style="float:right;">
+      <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">? <span class="caret"></span></button>
+      <ul class="dropdown-menu dropdown-menu-right" style="width: 400px; margin-right: 20px;">
+        <li><p>-Use full names for students.</p></li>
+        <li><p>-Check out <a href="/admin/users">Users Index</a> for a list of users</p></li>
+        <li><p>-The group parser does not like blank lines or one person groups</p></li>
+        <li><p>-Groups are split by line.</p></li>
+        <li><p>-Members are split over ',' or '&'</p></li>
+        <li><p>-You can use the markdown lists off today.turing, but make sure to check the names</p></li>
+      </ul>
+    </div>
+  </div>
 
   <%= form_for @invite_set, url: admin_invite_sets_path, method: :post do |f| %>
     <p>

@@ -17,6 +17,13 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+.project-headline h3, .project-headline div {
+  display: inline;
+  vertical-align: top;
+  font-size: 16px;
+  line-height: 28px;
+}
+
 .login {
   /*vertical-align: middle;*/
   margin-top: 12%;
