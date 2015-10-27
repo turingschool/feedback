@@ -23,6 +23,17 @@ class Admin::InviteSetsController < Admin::BaseAdminController
     @invite_sets = InviteSet.all
   end
 
+  def destroy
+    set = InviteSet.find(params[:id])
+    if set.destroy
+      flash[:success] = "Project has been deleted"
+      redirect_to admin_invite_sets_path
+    else
+      flash[:error] = "Could not delete Project"
+      redirect_to admin_invite_sets_path
+    end
+  end
+
   def deliver
     @invite_set = InviteSet.find(params[:id])
     @invite_set.deliver!
