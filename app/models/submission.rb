@@ -19,11 +19,11 @@ class Submission < ActiveRecord::Base
 
   def self.options
     [
-      :strongly_disagree,
-      :disagree,
-      :neutral,
-      :agree,
-      :strongly_agree
+      "strongly disagree",
+      "disagree",
+      "neutral",
+      "agree",
+      "strongly agree"
     ]
   end
 
@@ -34,11 +34,11 @@ class Submission < ActiveRecord::Base
 
   def word_to_score(word)
     {
-      'strongly_disagree' => -2,
+      'strongly disagree' => -2,
       'disagree'          => -1,
       'neutral'           =>  0,
       'agree'             =>  1,
-      'strongly_agree'    =>  2
+      'strongly agree'    =>  2
     }[word]
   end
 
