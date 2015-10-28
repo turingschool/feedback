@@ -23,7 +23,7 @@
             </td>
             <td class="text-center">
               <% if !invite_set.delivered? %>
-                <%= link_to 'Deliver', deliver_admin_invite_set_path(invite_set), :method => :post, class: "btn btn-warning btn-sm" %>
+                <%= link_to 'Deliver Invites', deliver_admin_invite_set_path(invite_set), :method => :post, class: "btn btn-warning btn-sm" %>
               <%end%>
               <%= link_to "Delete", admin_invite_set_path(invite_set.id), :method => :delete, class: "btn btn-danger btn-sm" %>
             </td>

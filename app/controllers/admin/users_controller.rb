@@ -8,8 +8,8 @@ class Admin::UsersController < Admin::BaseAdminController
 
   def new
     if params[:students_list]
-      students_list ||= params[:students_list]
-      cohort ||= params[:cohort]
+      students_list = params[:students_list]
+      cohort      ||= params[:cohort]
       if create_students(students_list, cohort)
         flash[:success] = "New Cohort Created"
         redirect_to admin_users_path
@@ -46,19 +46,23 @@ class Admin::UsersController < Admin::BaseAdminController
   end
 
   def deliver_all
-    user       = User.find(params[:id])
-    submission = Submission.where(feedback_for: user).constructive
-    if submission.present?
-      send_all_contructive_submissions_to_user(user.id) #not implemented
-      flash[:success] = "All Eligible Submissions Sent"
+    submissions = get_submissions_for_user(User.find(params[:id]))
+
+    if submission.empty?
+      flash[:error] = "No eligible submissions to send"
       redirect_to admin_users_path
     else
-      flash[:error] = "No Eligible Submissions"
+      send_all_contructive_submissions_to_user(submissions)
+      flash[:success] = "All Eligible Submissions Sent"
       redirect_to admin_users_path
     end
   end
 
   private
+
+  def get_submissions_for_user(user)
+    Submission.joins(:invite).where("invites.feedback_for" => user, peer_review_score: 2)
+  end
 
   def user_params
     params.require(:user).permit(:email, :name, :cohort, :password, :password_confirmation)
@@ -79,6 +83,12 @@ class Admin::UsersController < Admin::BaseAdminController
     lines.map do |line|
       info = line.split("<").map{|x|x.gsub(/"|\/|>/, '').strip}
       {name: info[0], email: info[1]}
+    end
+  end
+
+  def send_all_contructive_submissions_to_user(submissions)
+    submissions.each do |sub|
+      SubmissionMailer.send_submission(sub).deliver_now
     end
   end
 end
