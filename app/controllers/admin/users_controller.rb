@@ -6,7 +6,7 @@ class Admin::UsersController < Admin::BaseAdminController
     @password = SecureRandom.base64
   end
 
-  def new
+  def new #Cohort
     if params[:students_list]
       students_list = params[:students_list]
       cohort      ||= params[:cohort]
