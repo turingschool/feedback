@@ -10,9 +10,12 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'formtastic'
 gem 'jquery-rails'
-gem 'rails_12factor'
 gem 'figaro'
 gem 'bcrypt', '~> 3.1.7'
+
+group :production do
+  gem 'rails_12factor'
+end
 
 group :development, :test do
   gem 'pry'

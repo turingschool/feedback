@@ -6,6 +6,6 @@ class SubmissionMailer < ApplicationMailer
     @feedback = submission
     @title    = submission.project_title
     mail( :to => @user_to.email,
-    :subject => "#{@title} FeedBack")
+          :subject => "#{@title} FeedBack")
   end
 end
