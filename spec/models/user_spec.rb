@@ -17,7 +17,24 @@ RSpec.describe User, type: :model do
 
   describe "peer review count check" do
     it "will try to send email if user has review count of 3" do
+      invite_set = InviteSet.create(title: "Code Retreat Pairing",
+                       groups: "* horace, jeff")
+
+      invite = Invite.create(invite_set: invite_set,
+                    feedback_from: user2,
+                    feedback_for: user1)
+
+      sub = Submission.create(invite: invite,
+                        feedback_from: user2,
+                        feedback_for: user1,
+                        participation: "good",
+                        peer_review_score: 2,
+                        again: "yes",
+                        valuable: "yes",
+                        comments: "you da man")
+
       user1.peer_review_count = 5
+      assert_equal sub, user1.undelivered_ready_submission(user1)
       expect(user1).to receive(:send_submission_email)
       user1.save!
     end

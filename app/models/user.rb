@@ -19,12 +19,16 @@ class User < ActiveRecord::Base
     calculate_delivery_percent(submission.feedback_from.id)
   end
 
+  def undelivered_ready_submission(user)
+    Submission.find { |x| x.invite.feedback_for == user  &&
+                      x.peer_review_score   == 2     &&
+                      x.delivered           == false }
+  end
+
   private
 
   def send_user_one_submission_email
-    submission  = Submission.find { |x| x.invite.feedback_for == self  &&
-                                        x.peer_review_score   == 2     &&
-                                        x.delivered           == false }
+    submission  = undelivered_ready_submission(self)
     if submission.present?
       send_submission_email(submission)
     end
