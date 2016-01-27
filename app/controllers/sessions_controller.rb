@@ -8,7 +8,11 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       cookies.signed[:feedback_user] = user.id
-      redirect_to admin_invite_sets_path
+      if user.admin?
+        redirect_to admin_invite_sets_path
+      else
+        redirect_to submissions_path
+      end
     else
       flash[:error] = "Wrong Email or Password"
       redirect_to root_path
