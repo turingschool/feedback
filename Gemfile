@@ -12,6 +12,8 @@ gem 'formtastic'
 gem 'jquery-rails'
 gem 'figaro'
 gem 'bcrypt', '~> 3.1.7'
+gem 'slack-api'
+gem "omniauth-slack"
 
 group :production do
   gem 'rails_12factor'

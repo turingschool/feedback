@@ -17,5 +17,10 @@ Rails.application.routes.draw do
         post :deliver
       end
     end
-   end
+  end
+
+  get "/oauth", to: redirect("/auth/slack")#, as: :login
+  get "/auth/slack/callback" => "sessions#oauth"
+  # get "/logout", to: "sessions#destroy", as: :logout
+
 end

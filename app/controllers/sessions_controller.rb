@@ -4,6 +4,16 @@ class SessionsController < ApplicationController
     @user ||= User.new
   end
 
+  def oauth
+    slack_info = request.env["omniauth.auth"]
+    u = User.new(name: slack_info["info"]["name"],
+                 email: slack_info["info"]["email"],
+                 slack_id: slack_info["uid"],
+                 admin: slack_info["info"]["is_admin"],
+                 slack_token: slack_info["credentials"]["token"],
+                 slack_name: slack_info["info"]["user"])
+  end
+
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
