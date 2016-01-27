@@ -19,11 +19,14 @@ class InviteSet < ActiveRecord::Base
     end
   end
 
-  def members_from(group)
+  def member_names(group)
     raw_members = strip_list_marker(group)
     likely_separator = likely_separator(raw_members)
     names = raw_members.split(likely_separator).map{|m| m.strip}
-    names.map do |n|
+  end
+
+  def members_from(group)
+    member_names(group).map do |n|
       user = User.find_by_name(n)
       if user.nil?
         raise "Validation Error. There's something wrong with the users entered. Check the user names again"
