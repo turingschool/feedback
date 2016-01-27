@@ -24,3 +24,19 @@ InviteSet.create!(title: "VPSmasher",
 
 InviteSet.create!(title: "Game Time",
                  groups: "Tim, Mike, Josh")
+
+
+staff = {"Jeff Casimir" => "jeff@turing.io",
+         "Horace Williams" => "horace@turing.io",
+         "Rachel Warbelow" => "rachel@turing.io",
+         "Steve Kinney" => "steve@turing.io",
+         "Allison Reu Singer" => "allison@turing.io",
+         "Josh Cheek" => "josh@turing.io",
+         "Josh Mejia" => "jmejia@turing.io",
+         "Lovisa Svallingson" => "lovisa@turing.io",
+         "Joanne Liu" => "joanne@turing.io",
+         "Andrew Carmer" => "andrew@turing.io",
+         "Jorge Tellez" => "jorge@turing.io",
+         "Tess Griffin" => "tess@turing.io",
+         "Marissa Smith" => "marissa@turing.io",
+         "Romeeka Gayhart" => "romeeka@turing.io"}
