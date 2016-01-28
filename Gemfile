@@ -17,6 +17,7 @@ gem 'slack-api'
 gem "omniauth-slack"
 gem 'sidekiq'
 gem "sinatra"
+gem 'puma'
 
 group :production do
   gem 'rails_12factor'
