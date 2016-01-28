@@ -8,7 +8,7 @@ require "action_mailer/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Feedback
+module FeedbackApp
   class Application < Rails::Application
     config.action_mailer.delivery_method = :smtp
 
