@@ -1,8 +1,20 @@
 <div class="container">
   <div class="row">
-    <h3>Submitting Feedback</h3>
-    <p>Sender: <%= @fb.sender.slack_name %></p>
-    <p>Receiver: <%= @fb.receiver.slack_name %></p>
+    <h4>Please leave feedback for <%= @fb.receiver.name %> below.
+    </h4>
+
+    <h5>
+      Remember that "Quality Feedback" is A) specific, B) actionable, C) kind.
+    </h5>
+
+    <p>You might use these questions to get your thinking rolling:</p>
+    <ul>
+      <li>What is one thing that went unusually well during your collaboration with <%= @fb.receiver.name %></li>
+      <li>If you were working with <%= @fb.receiver.name %> again, what's something the <em>TEAM</em> could do better?</li>
+      <li>If you were working with <%= @fb.receiver.name %> again, what's something <em>THEY</em> could do better?</li>
+      <li>What stands between where <%= @fb.receiver.name %> is now and where they could be?</li>
+    </ul>
+
     <%= bootstrap_form_for @fb do |f| %>
       <%= f.text_area :text, hide_label: true, placeholder: "Your feedback here..." %>
       <%= f.submit %>
