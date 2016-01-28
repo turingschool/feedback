@@ -1,10 +1,8 @@
 class User < ActiveRecord::Base
-  has_secure_password
-  validates :password, confirmation: true
-  # validates :email, uniqueness: true
   has_many :invites, :foreign_key => :feedback_from_id, dependent: :destroy
   has_many :submissions, through: :invites
-  after_save :check_peer_review_count
+  # after_save :check_peer_review_count
+
 
   def check_peer_review_count
     if peer_review_count >= 3
