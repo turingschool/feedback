@@ -39,10 +39,10 @@ module SlackMembers
                                slack_name: slack_member_info["name"])
       else
         if User.create(name: slack_member_info["real_name"],
-                    email: slack_member_info["profile"]["email"],
-                    slack_id: uid,
-                    admin: false,
-                    slack_name: slack_member_info["name"])
+                       email: slack_member_info["profile"]["email"],
+                       slack_id: uid,
+                       admin: false,
+                       slack_name: slack_member_info["name"])
           puts "imported user #{uid}"
         else
           puts "failed to import user #{uid}"
