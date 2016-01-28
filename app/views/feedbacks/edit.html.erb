@@ -1,0 +1,10 @@
+<h1>Submitting Feedback</h1>
+
+<h2>Sender: <%= @fb.sender.slack_name %></h2>
+<h2>Receiver: <%= @fb.receiver.slack_name %></h2>
+
+<%= form_for @fb, url: update_feedback_path(token: @fb.token) do |f| %>
+ <%= f.label :feedback %>
+ <%= f.text_area :text %>
+ <%= f.submit %>
+<% end %>
