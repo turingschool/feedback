@@ -5,14 +5,12 @@ class SessionsController < ApplicationController
 
   def oauth
     slack_info = request.env["omniauth.auth"]
-    u_info = { name: slack_info["info"]["name"],
-               email: slack_info["info"]["email"],
-               slack_id: slack_info["uid"],
-               admin: slack_info["info"]["is_admin"],
-               slack_token: slack_info["credentials"]["token"],
-               slack_name: slack_info["info"]["user"] }
-    session[:user_info] = u_info
-    redirect_to root_path
+    if user = User.find_by(slack_id: slack_info["uid"])
+      session[:user_id] = user.id
+      redirect_to session[:return_to] || feedbacks_path
+    else
+      render text: "Sorry, @#{slack_info["info"]["user"]}, you have not been added to the feedback app yet."
+    end
   end
 
   def create
@@ -37,3 +35,10 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 end
+
+    # u_info = { name: slack_info["info"]["name"],
+    #            email: slack_info["info"]["email"],
+    #            slack_id: slack_info["uid"],
+    #            admin: slack_info["info"]["is_admin"],
+    #            slack_token: slack_info["credentials"]["token"],
+    #            slack_name: slack_info["info"]["user"] }

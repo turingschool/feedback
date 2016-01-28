@@ -5,10 +5,14 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    if cookies[:feedback_user]
-      @current_user = User.find(cookies.signed[:feedback_user])
-    else
-      @current_user ||= User.new
+    return nil unless session[:user_id]
+    @current_user ||= User.find(session[:user_id])
+  end
+
+  def require_login
+    unless current_user
+      session[:return_to] = request.fullpath
+      redirect_to "/auth/slack"
     end
   end
 end
