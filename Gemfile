@@ -14,6 +14,8 @@ gem 'figaro'
 gem 'bcrypt', '~> 3.1.7'
 gem 'slack-api'
 gem "omniauth-slack"
+gem 'sidekiq'
+gem "sinatra"
 
 group :production do
   gem 'rails_12factor'

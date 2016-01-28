@@ -9,6 +9,10 @@ class Slackk
     all_slack_members.find { |m| m["id"] == uid }
   end
 
+  def self.member_by_name(slack_name)
+    all_slack_members.find { |m| m["name"] == slack_name }
+  end
+
   def self.user_groups
     Rails.cache.fetch("user_groups") do
       Slack.usergroups_list["usergroups"]

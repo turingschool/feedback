@@ -11,21 +11,10 @@ Rails.application.routes.draw do
   get "/feedback/:token", to: "feedbacks#edit", as: "feedback"
   patch "/feedback/:token", to: "feedbacks#update", as: "update_feedback"
 
-  # resources :submissions, only: [:index, :create, :update]
-  # resources :invites
-  # namespace :admin do
-  #   get "deliver-all/:id",  to: "admin/users#deliver_all", as: "deliver_all" #just an idea for later
-  #   resources :submissions, only: [:index, :update]
-  #   resources :users
-  #   resources :invite_sets do
-  #     member do
-  #       post :deliver
-  #     end
-  #   end
-  # end
-
   get "/oauth", to: redirect("/auth/slack")#, as: :login
   get "/auth/slack/callback" => "sessions#oauth"
   # get "/logout", to: "sessions#destroy", as: :logout
 
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq' if Rails.env.development?
 end

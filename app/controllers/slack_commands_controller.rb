@@ -38,12 +38,11 @@ class SlackCommandsController < ApplicationController
   def feedback_handler(message)
     group_members = User.where(slack_name: user_names(message))
     feedbacks = cross_invite(group_members)
-    sbot = Bot.new
     feedbacks.each do |f|
       url = feedback_url(token: f.token)
       msg = "Hi, #{f.sender.name}, you've been requested to leave feedback for #{f.receiver.name}. Please do so here #{url}"
       puts "trying to send info to #{f.sender.slack_id}"
-      sbot.message_user(f.sender.slack_id, msg)
+      SlackMessageWorker.perform_async(f.sender.slack_id, msg)
     end
     "Created #{feedbacks.count} feedback requests"
   end

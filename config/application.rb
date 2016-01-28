@@ -21,5 +21,6 @@ module FeedbackApp
       enable_starttls_auto: true
     }
     config.active_record.raise_in_transactional_callbacks = true
+    config.autoload_paths << Rails.root.join('app/workers')
   end
 end
