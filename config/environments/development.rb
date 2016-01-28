@@ -1,3 +1,5 @@
+require 'active_support/core_ext/numeric/bytes'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -9,9 +11,11 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
-  # Show full error reports and disable caching.
+  # Show full error reports
   config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+
+  config.action_controller.perform_caching = true
+  config.cache_store = :memory_store, { size: 64.megabytes, expires_in: 10.minutes }
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp

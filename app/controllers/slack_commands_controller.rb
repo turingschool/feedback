@@ -1,16 +1,46 @@
 class SlackCommandsController < ApplicationController
+  rescue_from Exception, with: :text_error_handler
   skip_before_action :verify_authenticity_token
   before_action :verify_slack_token
-  def create
-    render text: slack_handler(params["text"])
+
+  def text_error_handler(error)
+    render text: "Error: #{error.class} -- #{error.message}"
   end
 
-  def slack_handler(message)
+  def create
+    case params["command"]
+    when "feedback"
+      render text: feedback_handler(params["text"])
+    when "pairs"
+      render text: pairs_handler(params["text"])
+    else
+      "Sorry, command #{params["command"]} not known."
+    end
+  end
+
+  def pairs_handler(usergroup)
+    group = Slackk.user_group_by_handle(usergroup)
+    if group
+      members = Slackk.user_group_members(group["id"])
+      "Pairs: \n* " + members.map do |uid|
+         Slackk.member(uid)
+      end.map do |member|
+        member["name"]
+      end.shuffle.each_slice(2).map do |pair|
+        pair.join(", ")
+      end.join("\n* ")
+    else
+      gnames = Slackk.user_groups.map { |g| g["handle"] }.join(", ")
+      "Sorry, #{usergroup} is not a known usergroup. Try one of #{gnames}."
+    end
+  end
+
+  def feedback_handler(message)
     group_members = User.where(slack_name: user_names(message))
     feedbacks = cross_invite(group_members)
     sbot = Bot.new
     feedbacks.each do |f|
-      url = "https://cc875ed1.ngrok.io" + feedback_path(token: f.token)
+      url = feedback_url(token: f.token)
       msg = "Hi, #{f.sender.name}, you've been requested to leave feedback for #{f.receiver.name}. Please do so here #{url}"
       puts "trying to send info to #{f.sender.slack_id}"
       sbot.message_user(f.sender.slack_id, msg)

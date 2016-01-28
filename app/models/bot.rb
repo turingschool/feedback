@@ -11,8 +11,6 @@ class Bot
   end
 
   def im_channel(uid)
-    info = client.im_open(user: uid)
-    puts "GOT CHANNEL INFO: #{info}"
-    info["channel"]["id"]
+    client.im_open(user: uid)["channel"]["id"]
   end
 end
