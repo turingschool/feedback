@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  root 'sessions#new'
-
-  get "submission/:token", to: "submissions#new"
+  root 'feedbacks#index'
 
   post "/slack/:command", to: "slack_commands#create"
 

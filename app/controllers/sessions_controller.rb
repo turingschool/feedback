@@ -1,8 +1,4 @@
 class SessionsController < ApplicationController
-  def new
-    @user ||= User.new
-  end
-
   def oauth
     slack_info = request.env["omniauth.auth"]
     if user = User.find_by(slack_id: slack_info["uid"])
@@ -30,7 +26,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session.clear
-    cookies.delete :feedback_user
     flash[:success] = "Logout Successful"
     redirect_to root_path
   end
