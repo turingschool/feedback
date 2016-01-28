@@ -18,17 +18,28 @@ class SlackCommandsController < ApplicationController
     end
   end
 
+  # When pairs are generated, store a grouping record
+  # assign group record a tag (hash? words?)
+  # show message indicating you can request feedback for these
+  # groups later using the tag
+
   def pairs_handler(usergroup)
     group = Slackk.user_group_by_handle(usergroup)
     if group
       members = Slackk.user_group_members(group["id"])
-      "Pairs: \n* " + members.map do |uid|
+      header = "Pairs:"
+      grouping = "* " + members.map do |uid|
          Slackk.member(uid)
       end.map do |member|
         member["name"]
       end.shuffle.each_slice(2).map do |pair|
         pair.join(", ")
       end.join("\n* ")
+
+      g = Grouping.create(content: grouping)
+
+      footer = "Stored this grouping as #{g.tag}. You can use this tag later to request feedback from these groups."
+      [header, grouping, footer].join("\n")
     else
       gnames = Slackk.user_groups.map { |g| g["handle"] }.join(", ")
       "Sorry, #{usergroup} is not a known usergroup. Try one of #{gnames}."
@@ -36,7 +47,20 @@ class SlackCommandsController < ApplicationController
   end
 
   def feedback_handler(message)
-    group_members = User.where(slack_name: user_names(message))
+    if grouping = Grouping.find_by(tag: message)
+      feedbacks = grouping.groups.flat_map do |group|
+        request_feedback(group)
+      end
+      "Created #{feedbacks.count} feedback requests"
+    else
+      # assume they are sending usernames e.g. "@j3 @horace @mike"
+      feedbacks = request_feedback(user_names(message))
+      "Created #{feedbacks.count} feedback requests"
+    end
+  end
+
+  def request_feedback(slack_names)
+    group_members = User.where(slack_name: slack_names)
     feedbacks = cross_invite(group_members)
     feedbacks.each do |f|
       url = edit_feedback_url(f)
@@ -44,7 +68,7 @@ class SlackCommandsController < ApplicationController
       puts "trying to send info to #{f.sender.slack_id}"
       SlackMessageWorker.perform_async(f.sender.slack_id, msg)
     end
-    "Created #{feedbacks.count} feedback requests"
+    feedbacks
   end
 
   def cross_invite(members)
@@ -54,7 +78,6 @@ class SlackCommandsController < ApplicationController
       end
     end
   end
-
 
   def user_names(message)
     message.split.map { |n| n.sub("@", "") }
