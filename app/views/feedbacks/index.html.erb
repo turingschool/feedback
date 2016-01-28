@@ -6,8 +6,13 @@
   <div class="row">
     <h4>Pending Feedback that you need to submit:</h4>
 
-    <% current_user.sent_feedback.pending.each do |f| %>
-    <% end %>
+    <ul>
+      <% current_user.sent_feedback.pending.each do |f| %>
+        <li>
+          <%= link_to "Feedback to #{f.receiver.name}", edit_feedback_path(f) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 
   <div class="row">

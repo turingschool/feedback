@@ -22,6 +22,7 @@ class FeedbacksController < ApplicationController
     fb.save
     msg = "Hi, #{fb.receiver.slack_name}, #{fb.sender.slack_name} sent you the following feedback: #{fb.text}"
     SlackMessageWorker.perform_async(fb.receiver.slack_id, msg)
-    render text: "THANKS FOR SUBMITTING FEEDBACK"
+    flash[:message] = "Thanks for submitting feedback to #{fb.receiver.name}."
+    redirect_to feedbacks_path
   end
 end

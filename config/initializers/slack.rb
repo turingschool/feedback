@@ -20,18 +20,13 @@ end
 
 module SlackMembers
   def self.import_from_usergroups
-    slack_members = Slack.users_list["members"]
-    puts "found #{slack_members.count} slack members"
-    user_groups = Slack.usergroups_list["usergroups"]
-    puts "found #{user_groups.count} user groups"
-    user_groups.map do |g|
+    Slackk.user_groups.map do |g|
       g["id"]
     end.flat_map do |g_id|
-      puts "retrieving users for group #{g_id}"
-      Slack.usergroups_users_list(usergroup: g_id)["users"]
+      Slackk.user_group_members(g_id)
     end.each do |uid|
       puts "importing user account for uid: #{uid}"
-      slack_member_info = slack_members.find { |u| u["id"] == uid }
+      slack_member_info = Slackk.member(uid)
       if user = User.find_by(slack_id: uid)
         puts "found pre-existing user record for #{uid}; will update"
         user.update_attributes(name: slack_member_info["real_name"],
