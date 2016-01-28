@@ -8,8 +8,7 @@ Rails.application.routes.draw do
 
   post "/slack/:command", to: "slack_commands#create"
 
-  get "/feedback/:token", to: "feedbacks#edit", as: "feedback"
-  patch "/feedback/:token", to: "feedbacks#update", as: "update_feedback"
+  resources :feedbacks, only: [:index, :update, :edit, :show]
 
   get "/oauth", to: redirect("/auth/slack")#, as: :login
   get "/auth/slack/callback" => "sessions#oauth"

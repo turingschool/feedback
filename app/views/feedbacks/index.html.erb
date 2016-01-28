@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+    <h3>Feedback Summary for <%=current_user.name%> </h3>
+  </div>
+
+  <div class="row">
+    <h4>Pending Feedback that you need to submit:</h4>
+
+    <% current_user.sent_feedback.pending.each do |f| %>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <h4>Additionally, you are waiting on the following users to send you feedback:</h4>
+
+    <ul>
+      <% current_user.received_feedback.pending.each do |f| %>
+        <li>
+          <%= f.sender.name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="row">
+    <h4>Feedback you have received</h4>
+
+    <ul>
+      <% current_user.received_feedback.submitted.each do |f| %>
+        <li>
+          <%= link_to("Feedback from #{f.sender.name}", feedback_path(f)) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="row">
+    <h4>Feedback you have sent</h4>
+
+    <ul>
+      <% current_user.sent_feedback.submitted.each do |f| %>
+        <li>
+          <%= link_to "Feedback to #{f.receiver.name}", feedback_path(f) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
