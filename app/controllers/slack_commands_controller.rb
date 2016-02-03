@@ -36,16 +36,9 @@ class SlackCommandsController < ApplicationController
   # "text"=>"sadfsadfdsaf asdfadsf asdfasdf",
   # "response_url"=>"https://hooks.slack.com/commands/T029P2S9M/20226350451/XXXXXXX"}
   def check_handler(params)
-    question = params["text"]
-    message_text = "Check for Understanding: #{question}."
-    b = Bot.new
-    message_info = b.post_to_channel(params["channel_id"], message_text)
-    ["one", "two", "three", "four", "five"].each do |r|
-      b.add_reaction(message_info["channel"],
-                     message_info["ts"],
-                     r)
-    end
-    "Done"
+    CheckForUnderstandingWorker.perform_async("Check for Understanding: #{params["text"]}.",
+                                              params["channel_id"])
+    "Check for understanding incoming..."
   end
 
   def pairs_handler(usergroup)
