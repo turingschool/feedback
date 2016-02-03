@@ -8,20 +8,45 @@ class SlackCommandsController < ApplicationController
   end
 
   def create
+    # params["text"] takes everything after the command name and
+    # initial space
+    # e.g. /command this is the text
+    # params["text"] == "this is the text"
     case params["command"]
     when "feedback"
       render text: feedback_handler(params["text"])
     when "pairs"
       render text: pairs_handler(params["text"])
+    when "check"
+      render text: check_handler(params)
     else
       "Sorry, command #{params["command"]} not known."
     end
   end
 
-  # When pairs are generated, store a grouping record
-  # assign group record a tag (hash? words?)
-  # show message indicating you can request feedback for these
-  # groups later using the tag
+  # sample params
+  #   {"token"=>"XXXXXX",
+  # "team_id"=>"T029P2S9M",
+  # "team_domain"=>"turingschool",
+  # "channel_id"=>"D0KJSMAEL",
+  # "channel_name"=>"directmessage",
+  # "user_id"=>"U02MYKGQB",
+  # "user_name"=>"horace",
+  # "command"=>"pairs",
+  # "text"=>"sadfsadfdsaf asdfadsf asdfasdf",
+  # "response_url"=>"https://hooks.slack.com/commands/T029P2S9M/20226350451/XXXXXXX"}
+  def check_handler(params)
+    question = params["text"]
+    message_text = "Check for Understanding: #{question}."
+    b = Bot.new
+    message_info = b.post_to_channel(message)
+    ["one", "two", "three", "four", "five"].each do |r|
+      b.add_reaction(message_info["channel"],
+                     message_info["ts"],
+                     r)
+    end
+    "Done"
+  end
 
   def pairs_handler(usergroup)
     group = Slackk.user_group_by_handle(usergroup)
