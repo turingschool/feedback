@@ -39,7 +39,7 @@ class SlackCommandsController < ApplicationController
     question = params["text"]
     message_text = "Check for Understanding: #{question}."
     b = Bot.new
-    message_info = b.post_to_channel(message)
+    message_info = b.post_to_channel(message_text)
     ["one", "two", "three", "four", "five"].each do |r|
       b.add_reaction(message_info["channel"],
                      message_info["ts"],
