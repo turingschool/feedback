@@ -18,7 +18,7 @@ class SlackCommandsController < ApplicationController
     when "pairs"
       render text: pairs_handler(params["text"])
     when "groups"
-      render text: groups_handler(*params["text"].split)
+      render text: groups_handler(params["text"])
     when "check"
       render text: check_handler(params)
     else
