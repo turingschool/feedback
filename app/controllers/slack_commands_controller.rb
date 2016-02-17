@@ -66,7 +66,9 @@ class SlackCommandsController < ApplicationController
     end
   end
 
-  def groups_handler(usergroup, group_size)
+  def groups_handler(text)
+    Rails.logger.info("GROUP HANDLER FOR TEXT: #{text}")
+    usergroup, group_size = text.split
     return "Sorry, not a valid group size #{group_size}" unless group_size.to_i > 0
 
     group = Slackk.user_group_by_handle(usergroup)
@@ -77,7 +79,7 @@ class SlackCommandsController < ApplicationController
          Slackk.member(uid)
       end.map do |member|
         member["name"]
-      end.shuffle.each_slice(group_size).map do |pair|
+      end.shuffle.each_slice(group_size.to_i).map do |pair|
         pair.join(", ")
       end.join("\n* ")
 
