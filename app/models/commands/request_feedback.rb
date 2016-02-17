@@ -1,19 +1,25 @@
 module Commands
   class RequestFeedback < Base
     def response
-      feedback_handler(params["text"])
-    end
-    def feedback_handler(message)
-      if grouping = Grouping.find_by(tag: message)
-        feedbacks = grouping.groups.flat_map do |group|
-          request_feedback(group)
-        end
-        "Created #{feedbacks.count} feedback requests"
+      if grouping = Grouping.find_by(tag: text)
+        # they sent a tag for a pre-existing grouping
+        feedbacks_for_grouping(grouping)
       else
         # assume they are sending usernames e.g. "@j3 @horace @mike"
-        feedbacks = request_feedback(user_names(message))
-        "Created #{feedbacks.count} feedback requests"
+        feedbacks_for_usernames
       end
+    end
+
+    def feedbacks_for_grouping(grouping)
+      feedbacks = grouping.groups.flat_map do |group|
+        request_feedback(group)
+      end
+      "Created #{feedbacks.count} feedback requests"
+    end
+
+    def feedbacks_for_usernames
+      feedbacks = request_feedback(user_names)
+      "Created #{feedbacks.count} feedback requests"
     end
 
     def request_feedback(slack_names)
@@ -36,8 +42,8 @@ module Commands
       end
     end
 
-    def user_names(message)
-      message.split.map { |n| n.sub("@", "") }
+    def user_names
+      text.split.map { |n| n.sub("@", "") }
     end
   end
 end

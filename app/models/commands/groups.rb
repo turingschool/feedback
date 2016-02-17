@@ -1,5 +1,5 @@
 module Commands
-  class Groups
+  class Groups < Base
     def group_size
       params["text"].split.last.to_i
     end

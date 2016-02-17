@@ -1,10 +1,13 @@
 module Commands
   class Base
+    include Rails.application.routes.url_helpers
+
     attr_reader :name, :params
+
     def initialize(name, params)
-      Rails.logger.info("Creating command handler for text: #{text} and params: #{params}")
       @name = name
       @params = params
+      Rails.logger.info("Creating command handler for text: #{text} and params: #{params}")
     end
 
     def response
