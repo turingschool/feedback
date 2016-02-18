@@ -19,3 +19,14 @@ module Commands
     end
   end
 end
+# sample params
+#   {"token"=>"XXXXXX",
+# "team_id"=>"T029P2S9M",
+# "team_domain"=>"turingschool",
+# "channel_id"=>"D0KJSMAEL",
+# "channel_name"=>"directmessage",
+# "user_id"=>"U02MYKGQB",
+# "user_name"=>"horace",
+# "command"=>"pairs",
+# "text"=>"sadfsadfdsaf asdfadsf asdfasdf",
+# "response_url"=>"https://hooks.slack.com/commands/T029P2S9M/20226350451/XXXXXXX"}

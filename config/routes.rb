@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :feedbacks, only: [:index, :update, :edit, :show]
 
+  resources :groupings, only: [:show, :update]
+
   get "/login", to: redirect("/auth/slack")#, as: :login
   get "/oauth", to: redirect("/auth/slack")#, as: :login
   get "/auth/slack/callback" => "sessions#oauth"

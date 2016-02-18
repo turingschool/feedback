@@ -25,7 +25,7 @@ module Commands
 
         g = Grouping.create(content: grouping)
 
-        footer = "Stored this grouping as #{g.tag}. You can use this tag later to request feedback from these groups."
+        footer = "Stored this grouping as #{g.tag}. You can use this tag later to request feedback from these groups. View it: #{grouping_url(g)}"
         [header, grouping, footer].join("\n")
       else
         gnames = Slackk.user_groups.map { |g| g["handle"] }.join(", ")

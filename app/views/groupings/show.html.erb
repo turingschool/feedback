@@ -1,0 +1,81 @@
+<h1>Grouping <%= @grouping.tag %></h1>
+
+<div class="grouping">
+  <div>
+    <p>Remove:</p>
+  </div>
+  <div class="group remove" ondrop="drop(event)" ondragover="allowDrop(event)" style="padding:20px;">
+  </div>
+</div>
+
+<div class="grouping">
+<% @grouping.groups.each do |g| %>
+  <div class="group keep" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <% g.each do |member| %>
+      <span id="<%= SecureRandom.hex %>" class="member" draggable="true" ondragstart="drag(event)"><%= member %></span>
+    <% end %>
+  </div>
+<% end %>
+</div>
+
+<button onclick="save()">
+  SAVE
+</button>
+
+<script>
+ function save() {
+   var groupingUrl = "/groupings/<%= @grouping.id %>"
+   $.ajax({method: "PUT",
+           url: groupingUrl,
+           data: {content: extractNewGroupingContentFromDom()
+           }}).done(function(stuff) {
+             console.log("woo we ajaxed some stuff: ", stuff)
+           });
+ }
+
+ function allowDrop(ev) {
+   ev.preventDefault();
+ }
+
+ function drag(ev) {
+   ev.dataTransfer.setData("text", ev.target.id);
+ }
+
+ function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  console.log("TRIED TO DROP A DATA: " + data)
+  ev.target.appendChild(document.getElementById(data));
+ }
+
+
+ function extractNewGroupingContentFromDom() {
+   return $(".group.keep").filter(function() {
+     return $(".member", this).length > 0;
+   }).map(function(i,el) {
+     return $(".member", $(el)).map(function(i, memberEl) {
+       return $(memberEl).text().trim();
+     });
+   }).map(function(i,groupNames) {
+     return "* " + groupNames.toArray().join(", ");
+   }).toArray().join("\n");
+ }
+
+</script>
+
+<style>
+ .grouping {
+   padding: 20px;
+   border: 1px solid red;
+ }
+
+ .group {
+   padding: 5px;
+   border: 1px solid green;
+ }
+
+ .member {
+   margin-right: 10px;
+   display: inline-block;
+ }
+</style>

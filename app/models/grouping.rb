@@ -8,4 +8,8 @@ class Grouping < ActiveRecord::Base
   def groups
     content.gsub("* ","").split("\n").map { |g| g.split(", ") }
   end
+
+  def to_param
+    tag
+  end
 end
