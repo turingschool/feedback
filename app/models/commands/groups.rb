@@ -18,7 +18,7 @@ module Commands
         grouping = "* " + members.map do |uid|
           Slackk.member(uid)
         end.map do |member|
-          member["name"]
+          member["real_name"]
         end.shuffle.each_slice(group_size).map do |pair|
           pair.join(", ")
         end.join("\n* ")
